@@ -18,13 +18,13 @@
 
 - (void)testFindIndexShouldReturnFailWhenNotPresent {
     NSArray * array = [NSArray arrayWithObjects:@"dog", @"mouse", nil];
-    GHAssertEquals(-1, [array findIndex:@"cat"],   @"should not be equal");
+    GHAssertEquals(NSNotFound, [array findIndex:@"cat"],   @"should not be equal");
 }
 
 - (void)testFindIndexShouldReturnTheIndexOfTheGivenElementUsingBlockSyntax {
     NSArray * array = [NSArray arrayWithObjects:@"dog", @"mouse", nil];
     GHAssertEquals(1, [array findIndexWithBlock:^BOOL(id obj) { return obj == @"mouse"; }], @"should be equal");
-    GHAssertEquals(-1, [array findIndexWithBlock:^BOOL(id obj) { return obj == @"cat"; }], @"should not be equal");
+    GHAssertEquals(NSNotFound, [array findIndexWithBlock:^BOOL(id obj) { return obj == @"cat"; }], @"should not be equal");
 }
 
 @end

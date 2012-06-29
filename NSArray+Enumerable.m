@@ -42,6 +42,20 @@
     return result;
 }
 
+
+// tomer
+- (id)injectWithIndex:(id)m :(id (^)(id m, id ob, NSUInteger idx))block {
+    id result = m ? m : [self firstObject];
+    
+    int index = 0;
+    for (id object in self) {
+        result = block(result, object, index);
+        index++;
+    }
+    
+    return result;
+}
+
 - (NSArray *)select:(BOOL (^)(id obj))block {
     return [self inject:[NSMutableArray array] :^(id m, id obj) {
         if (block(obj)) [m addObject:obj];
@@ -49,9 +63,25 @@
     }];
 }
 
+// tomer
+- (NSArray *)selectWithIndex:(BOOL (^)(id obj, NSUInteger idx))block {
+    return [self injectWithIndex:[NSMutableArray array] :^(id m, id obj, NSUInteger idx) {
+        if (block(obj, idx)) [m addObject:obj];
+        return m;
+    }];
+}
+
 - (NSArray *)reject:(BOOL (^)(id obj))block {
     return [self inject:[NSMutableArray array] :^(id m, id obj) {
         if (!block(obj)) [m addObject:obj];
+        return m;
+    }];
+}
+
+// tomer
+- (NSArray *)rejectWithIndex:(BOOL (^)(id obj, NSUInteger idx))block {
+    return [self injectWithIndex:[NSMutableArray array] :^(id m, id obj, NSUInteger idx) {
+        if (!block(obj, idx)) [m addObject:obj];
         return m;
     }];
 }
@@ -77,8 +107,9 @@
             return i;
         }
     }
-
-    return -1;
+    // tomer    
+    //return -1;
+    return NSNotFound;
 }
 
 @end

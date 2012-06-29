@@ -51,6 +51,19 @@
     return result;
 }
 
+// tomer
+- (id)injectWithIndex:(id)m :(id (^)(id m, id obj, NSUInteger idx))block {
+    id result = m ? m : [[self allObjects] firstObject];
+    
+    int index = 0;
+    for (id object in self) {
+        result = block(result, object, index);
+        index++;
+    }
+    
+    return result;
+}
+
 - (NSSet *)select:(BOOL (^)(id obj))block {
     return [self inject:[NSMutableSet set] :^(id m, id obj) {
         if (block(obj) == YES) [m addObject:obj];
@@ -58,9 +71,26 @@
     }];
 }
 
+
+// tomer
+- (NSSet *)selectWithIndex:(BOOL (^)(id obj, NSUInteger idx))block {
+    return [self injectWithIndex:[NSMutableSet set] :^(id m, id obj, NSUInteger idx) {
+        if (block(obj, idx) == YES) [m addObject:obj];
+        return m;
+    }];
+}
+
 - (NSSet *)reject:(BOOL (^)(id obj))block {
     return [self inject:[NSMutableSet set] :^(id m, id obj) {
         if (block(obj) == NO) [m addObject:obj];
+        return m;
+    }];
+}
+
+// tomer
+- (NSSet *)rejectWithIndex:(BOOL (^)(id obj, NSUInteger idx))block {
+    return [self injectWithIndex:[NSMutableSet set] :^(id m, id obj, NSUInteger idx) {
+        if (block(obj, idx) == NO) [m addObject:obj];
         return m;
     }];
 }

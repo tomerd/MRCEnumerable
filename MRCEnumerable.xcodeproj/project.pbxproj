@@ -436,10 +436,7 @@
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/MRCEnumerable.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../workspace/iphone/gh-unit/Project-IPhone/build/Framework\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -462,10 +459,7 @@
 					armv7,
 				);
 				DSTROOT = /tmp/MRCEnumerable.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../workspace/iphone/gh-unit/Project-IPhone/build/Framework\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MRCEnumerable_Prefix.pch;
@@ -524,7 +518,6 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../workspace/iphone/gh-unit/Project-IPhone/build/Framework\"",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/Vendor\"",
 				);
@@ -557,7 +550,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../workspace/iphone/gh-unit/Project-IPhone/build/Framework\"",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/Vendor\"",
 				);

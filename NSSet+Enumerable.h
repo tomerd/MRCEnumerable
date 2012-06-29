@@ -16,8 +16,14 @@
 - (NSSet *)collect:(id (^)(id obj))block;
 - (NSSet *)collectWithIndex:(id (^)(id obj, NSUInteger idx))block;
 - (id)inject:(id)m :(id (^)(id m, id obj))block;
+// tomer
+- (id)injectWithIndex:(id)m :(id (^)(id m, id obj, NSUInteger idx))block;
 - (NSSet *)select:(BOOL (^)(id obj))block;
+// tomer
+- (NSSet *)selectWithIndex:(BOOL (^)(id obj, NSUInteger idx))block;
 - (NSSet *)reject:(BOOL (^)(id obj))block;
+//tomer
+- (NSSet *)rejectWithIndex:(BOOL (^)(id obj, NSUInteger idx))block;
 - (id)detect:(BOOL (^)(id obj))block;
 
 @end
