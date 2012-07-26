@@ -13,7 +13,7 @@
 
 - (id) firstObject
 {
-    return self.empty ? [self objectAtIndex:0] : nil;
+    return !self.empty ? [self objectAtIndex:0] : nil;
 }
 
 - (BOOL) empty
