@@ -11,96 +11,113 @@
 
 @implementation NSSet (Enumerable)
 
-- (void)each:(void (^)(id obj))block {
-    [self enumerateObjectsUsingBlock:^(id obj, BOOL *stop) { block(obj); }];
+- (void) each:(void(^)(id obj))block
+{
+    [self enumerateObjectsUsingBlock:^(id obj, BOOL* stop) { block(obj); }];
 }
 
-- (void)eachWithIndex:(void (^)(id obj, NSUInteger idx))block {
+- (void) eachWithIndex:(void(^)(id obj, NSUInteger idx))block
+{
     NSUInteger idx = 0;
-    
-    for (id object in self) {
+    for (id object in self)
+    {
         block(object, idx++);
     }
 }
 
-- (NSSet *)collect:(id (^)(id obj))block {
-    NSMutableSet * results = [NSMutableSet setWithCapacity:[self count]];
-    [self enumerateObjectsUsingBlock:^(id obj, BOOL *stop) { [results addObject:block(obj)]; }];
+- (NSSet*) collect:(id(^)(id obj))block
+{
+    NSMutableSet*  results = [NSMutableSet setWithCapacity:self.count];
+    [self enumerateObjectsUsingBlock:^(id obj, BOOL* stop) { [results addObject:block(obj)]; }];
     return results;
 }
 
-
-- (NSSet *)collectWithIndex:(id (^)(id obj, NSUInteger idx))block {
-    NSMutableSet * results = [NSMutableSet setWithCapacity:[self count]];
-    NSUInteger idx = 0;
-    
-    for (id object in self) {
+- (NSSet*) collectWithIndex:(id(^)(id obj, NSUInteger idx))block
+{
+    NSMutableSet* results = [NSMutableSet setWithCapacity:self.count];
+    NSUInteger idx = 0;    
+    for (id object in self)
+    {
         [results addObject:block(object, idx++)];
     }
-
     return results;    
 }
 
-- (id)inject:(id)m :(id (^)(id m, id obj))block {
-    id result = m ? m : [[self allObjects] firstObject];
-    
-    for (id object in self) {
+- (id) inject:(id)m:(id(^)(id m, id obj))block
+{
+    id result = m ? m : self.allObjects.firstObject;
+    for (id object in self)
+    {
         result = block(result, object);
     }
-    
     return result;
 }
 
-// tomer
-- (id)injectWithIndex:(id)m :(id (^)(id m, id obj, NSUInteger idx))block {
-    id result = m ? m : [[self allObjects] firstObject];
-    
+- (id) injectWithIndex:(id)m:(id(^)(id m, id obj, NSUInteger idx))block
+{
+    id result = m ? m : self.allObjects.firstObject;
     int index = 0;
-    for (id object in self) {
+    for (id object in self)
+    {
         result = block(result, object, index);
         index++;
-    }
-    
+    }    
     return result;
 }
 
-- (NSSet *)select:(BOOL (^)(id obj))block {
-    return [self inject:[NSMutableSet set] :^(id m, id obj) {
+- (NSSet*) select:(BOOL(^)(id obj))block
+{
+    return [self inject:[NSMutableSet set]:^(id m, id obj)
+    {
         if (block(obj) == YES) [m addObject:obj];
         return m;
     }];
 }
 
 
-// tomer
-- (NSSet *)selectWithIndex:(BOOL (^)(id obj, NSUInteger idx))block {
-    return [self injectWithIndex:[NSMutableSet set] :^(id m, id obj, NSUInteger idx) {
+- (NSSet*) selectWithIndex:(BOOL(^)(id obj, NSUInteger idx))block
+{
+    return [self injectWithIndex:[NSMutableSet set] :^(id m, id obj, NSUInteger idx)
+    {
         if (block(obj, idx) == YES) [m addObject:obj];
         return m;
     }];
 }
 
-- (NSSet *)reject:(BOOL (^)(id obj))block {
-    return [self inject:[NSMutableSet set] :^(id m, id obj) {
+- (NSSet*) reject:(BOOL(^)(id obj))block
+{
+    return [self inject:[NSMutableSet set]:^(id m, id obj)
+    {
         if (block(obj) == NO) [m addObject:obj];
         return m;
     }];
 }
 
-// tomer
-- (NSSet *)rejectWithIndex:(BOOL (^)(id obj, NSUInteger idx))block {
-    return [self injectWithIndex:[NSMutableSet set] :^(id m, id obj, NSUInteger idx) {
+- (NSSet*) rejectWithIndex:(BOOL(^)(id obj, NSUInteger idx))block
+{
+    return [self injectWithIndex:[NSMutableSet set]:^(id m, id obj, NSUInteger idx)
+    {
         if (block(obj, idx) == NO) [m addObject:obj];
         return m;
     }];
 }
 
-- (id)detect:(BOOL (^)(id obj))block {
-    for (id object in self) {
+- (id) detect:(BOOL(^)(id obj))block
+{
+    for (id object in self)
+    {
         if (block(object)) return object;
-    }
-    
+    }    
     return nil;
+}
+
+- (BOOL) exists:(BOOL(^)(id obj))block
+{
+    for (id object in self)
+    {
+        if (block(object)) return TRUE;
+    }
+    return FALSE;
 }
 
 @end

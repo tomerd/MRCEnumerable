@@ -11,7 +11,7 @@
 
 @interface NSArray (Utilities)
 
-- (id)firstObject;
-- (BOOL)empty;
+- (id) firstObject;
+- (BOOL) empty;
 
 @end

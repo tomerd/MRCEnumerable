@@ -11,10 +11,11 @@
 
 @interface NSDictionary (Enumerable)
 
-- (void)each:(void (^)(id key, id obj))block;
-- (id)inject:(id)m :(id (^)(id m, id key, id obj))block;
-- (NSDictionary *)select:(BOOL (^)(id key, id obj))block;
-- (NSDictionary *)reject:(BOOL (^)(id key, id obj))block;
-- (id)detect:(BOOL (^)(id key, id obj))block;
+- (void) each:(void(^)(id key, id obj))block;
+- (id) inject:(id)m :(id(^)(id m, id key, id obj))block;
+- (NSDictionary*) select:(BOOL(^)(id key, id obj))block;
+- (NSDictionary*) reject:(BOOL(^)(id key, id obj))block;
+- (id) detect:(BOOL(^)(id key, id obj))block;
+- (BOOL) exists:(BOOL(^)(id key, id obj))block;
 
 @end

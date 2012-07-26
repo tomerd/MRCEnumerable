@@ -11,8 +11,9 @@
 
 @implementation NSSet (NSSet_Utilities)
 
-- (BOOL)empty {
-    return [self count] == 0;
+- (BOOL) empty
+{
+    return 0 == self.count;
 }
 
 @end

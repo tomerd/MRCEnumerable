@@ -11,6 +11,6 @@
 
 @interface NSSet (NSSet_Utilities)
 
-- (BOOL)empty;
+- (BOOL) empty;
 
 @end

@@ -11,13 +11,14 @@
 
 @implementation NSArray (Utilities)
 
-- (id)firstObject {
-    if ([self empty]) return nil;
-    return [self objectAtIndex:0];
+- (id) firstObject
+{
+    return self.empty ? [self objectAtIndex:0] : nil;
 }
 
-- (BOOL)empty {
-    return [self count] == 0;
+- (BOOL) empty
+{
+    return 0 == self.count;
 }
 
 @end
