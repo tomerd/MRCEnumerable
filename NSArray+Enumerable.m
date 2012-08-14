@@ -77,7 +77,7 @@
     }];
 }
 
-- (NSArray* )reject:(BOOL(^)(id obj))block
+- (NSArray*)reject:(BOOL(^)(id obj))block
 {
     return [self inject:[NSMutableArray array] :^(id m, id obj)
     {
@@ -86,7 +86,7 @@
     }];
 }
 
-- (NSArray* ) rejectWithIndex:(BOOL(^)(id obj, NSUInteger idx))block
+- (NSArray*) rejectWithIndex:(BOOL(^)(id obj, NSUInteger idx))block
 {
     return [self injectWithIndex:[NSMutableArray array] :^(id m, id obj, NSUInteger idx)
     {
@@ -100,6 +100,17 @@
     for (id object in self)
     {
         if (block(object)) return object;
+    }
+    return nil;
+}
+
+- (id) detectWithIndex:(BOOL(^)(id obj, NSUInteger idx))block
+{
+    int index = 0;
+    for (id object in self)
+    {
+        if (block(object, index)) return object;
+        index++;
     }
     return nil;
 }

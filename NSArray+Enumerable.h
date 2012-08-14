@@ -21,6 +21,7 @@
 - (NSArray*) reject:(BOOL(^)(id obj))block;
 - (NSArray*) rejectWithIndex:(BOOL(^)(id obj, NSUInteger idx))block;
 - (id) detect:(BOOL(^)(id obj))block;
+- (id) detectWithIndex:(BOOL(^)(id obj, NSUInteger idx))block;
 - (BOOL) exists:(BOOL(^)(id obj))block;
 - (NSInteger) findIndex:(id)obj;
 - (NSInteger) findIndexWithBlock:(BOOL(^)(id obj))block;
