@@ -15,8 +15,8 @@
 - (void) eachWithIndex:(void (^)(id obj, NSUInteger idx))block;
 - (NSSet*) collect:(id (^)(id obj))block;
 - (NSSet*) collectWithIndex:(id (^)(id obj, NSUInteger idx))block;
-- (id) inject:(id)m :(id (^)(id m, id obj))block;
-- (id) injectWithIndex:(id)m :(id (^)(id m, id obj, NSUInteger idx))block;
+- (id) inject:(id)m block:(id (^)(id m, id obj))block;
+- (id) injectWithIndex:(id)m block:(id (^)(id m, id obj, NSUInteger idx))block;
 - (NSSet*) select:(BOOL (^)(id obj))block;
 - (NSSet*) selectWithIndex:(BOOL (^)(id obj, NSUInteger idx))block;
 - (NSSet*) reject:(BOOL (^)(id obj))block;

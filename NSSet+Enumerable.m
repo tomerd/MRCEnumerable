@@ -43,7 +43,7 @@
     return results;    
 }
 
-- (id) inject:(id)m:(id(^)(id m, id obj))block
+- (id) inject:(id)m block:(id(^)(id m, id obj))block
 {
     id result = m ? m : self.allObjects.firstObject;
     for (id object in self)
@@ -53,7 +53,7 @@
     return result;
 }
 
-- (id) injectWithIndex:(id)m:(id(^)(id m, id obj, NSUInteger idx))block
+- (id) injectWithIndex:(id)m block:(id(^)(id m, id obj, NSUInteger idx))block
 {
     id result = m ? m : self.allObjects.firstObject;
     int index = 0;
@@ -67,7 +67,7 @@
 
 - (NSSet*) select:(BOOL(^)(id obj))block
 {
-    return [self inject:[NSMutableSet set]:^(id m, id obj)
+    return [self inject:[NSMutableSet set] block:^(id m, id obj)
     {
         if (block(obj) == YES) [m addObject:obj];
         return m;
@@ -77,7 +77,7 @@
 
 - (NSSet*) selectWithIndex:(BOOL(^)(id obj, NSUInteger idx))block
 {
-    return [self injectWithIndex:[NSMutableSet set] :^(id m, id obj, NSUInteger idx)
+    return [self injectWithIndex:[NSMutableSet set] block:^(id m, id obj, NSUInteger idx)
     {
         if (block(obj, idx) == YES) [m addObject:obj];
         return m;
@@ -86,7 +86,7 @@
 
 - (NSSet*) reject:(BOOL(^)(id obj))block
 {
-    return [self inject:[NSMutableSet set]:^(id m, id obj)
+    return [self inject:[NSMutableSet set] block:^(id m, id obj)
     {
         if (block(obj) == NO) [m addObject:obj];
         return m;
@@ -95,7 +95,7 @@
 
 - (NSSet*) rejectWithIndex:(BOOL(^)(id obj, NSUInteger idx))block
 {
-    return [self injectWithIndex:[NSMutableSet set]:^(id m, id obj, NSUInteger idx)
+    return [self injectWithIndex:[NSMutableSet set] block:^(id m, id obj, NSUInteger idx)
     {
         if (block(obj, idx) == NO) [m addObject:obj];
         return m;
