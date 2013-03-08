@@ -11,29 +11,42 @@
 
 @implementation NSArray (Enumerable)
 
-- (void)each:(void(^)(id obj))block
+- (void) each:(void(^)(id obj))block
 {
     [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) { block(obj); }];
 }
 
-- (void)eachWithIndex:(void(^)(id obj, NSUInteger idx))block
+- (void) eachWithIndex:(void(^)(id obj, NSUInteger idx))block
 {
     [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) { block(obj, idx); }];
 }
 
-- (NSArray*)collect:(id(^)(id obj))block
+- (NSArray*) collect:(id(^)(id obj))block
 {
     NSMutableArray* results = [NSMutableArray arrayWithCapacity:self.count];
     [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) { [results addObject:block(obj)]; }];
     return results;
 }
 
-
 - (NSArray*) collectWithIndex:(id(^)(id obj, NSUInteger idx))block
 {
     NSMutableArray*  results = [NSMutableArray arrayWithCapacity:self.count];
     [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) { [results addObject:block(obj, idx)]; }];
     return results;    
+}
+
+- (NSArray*) safeCollect:(id(^)(id obj, NSError** error))block error:(NSError**)error
+{
+    __block NSError* blockError = nil;
+    NSMutableArray* results = [NSMutableArray arrayWithCapacity:self.count];
+    [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop)
+    {
+        id result = block(obj, &blockError);
+        if (blockError) *stop = TRUE;
+        if (!*stop && result) [results addObject:result];
+    }];
+    if (error) *error = blockError;
+    return results;
 }
 
 - (id) inject:(id)m block:(id(^)(id m, id obj))block
@@ -45,7 +58,6 @@
     }
     return result;
 }
-
 
 - (id) injectWithIndex:(id)m block:(id(^)(id m, id ob, NSUInteger idx))block
 {
